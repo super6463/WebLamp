@@ -23,6 +23,11 @@ void build() {
   add.BREAK();
   add.SLIDER("br", "Bright:", data.bright, 0, 255);
   add.SLIDER("col", "Color:", data.color, 0, 255);
+  add.LABEL("Raduga:");
+  add.SWITCH("rad", rad_on);
+  add.SLIDER("rad", "Pulse:", rad_on, 0, 2);
+  add.SLIDER("speed", "Speed:", delayr, 1, 255);
+  add.LABEL("Minimum - fast, Maximum - slow.");
   add.BLOCK_END();
 
   add.FORM_BEGIN("/save");

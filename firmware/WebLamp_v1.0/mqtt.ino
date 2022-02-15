@@ -47,7 +47,9 @@ void callback(char* topic, byte* payload, uint16_t len) {
     case 1:   // управление
       data.power = getFromIndex(str, 1);
       data.color = getFromIndex(str, 2);
-      if (getFromIndex(str, 3)) wink();
+      rad_on = getFromIndex(str, 3);
+      delayr = getFromIndex(str, 4);
+      if (getFromIndex(str, 5)) wink();
       break;
 
     case 2:   // запрос
@@ -67,6 +69,10 @@ void sendPacket() {
   s += data.power;
   s += ',';
   s += data.color;
+  s += ',';
+  s += rad_on;
+  s += ',';
+  s += delayr;
   s += ',';
   s += winkFlag;
   winkFlag = 0;

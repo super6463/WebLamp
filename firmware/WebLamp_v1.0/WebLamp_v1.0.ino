@@ -8,13 +8,13 @@
   1.0 - релиз
 */
 
-#define LED_PIN D1    // пин ленты
-#define BTN_PIN D2    // пин кнопки
+#define LED_PIN D6   // пин ленты
+#define BTN_PIN D7  // пин кнопки
 #define PIR_PIN D5    // пин PIR (ИК датчика)
-#define LED_AMOUNT 30 // кол-вл светодиодов
+#define LED_AMOUNT 16 // кол-вл светодиодов
 #define BTN_LEVEL 1   // 1 - кнопка подключает VCC, 0 - подключает GND
-#define USE_PIR 1     // 1 - использовать PIR (ИК датчик) на этой лампе
-#define IGNORE_PIR 0  // 1 - игнорировать сигнал PIR (ИК датчика) с удалённой лампы
+#define USE_PIR 0   // 1 - использовать PIR (ИК датчик) на этой лампе
+#define IGNORE_PIR 1  // 1 - игнорировать сигнал PIR (ИК датчика) с удалённой лампы
 
 /*
   Запуск:
@@ -87,8 +87,13 @@ Timer hbTmr(8000);              // 8 секунд период отправки 
 
 void setup() {
   startup();      // запускаем всё
+  FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, LED_AMOUNT);
 }
-
+byte counter;
+int rad_on=0;
+int delayr=63;
+static int8_t dir = 10;
+int del=0;
 void loop() {
   if (USE_PIR && digitalRead(PIR_PIN)) pirFlag = 1;  // опрос ИК датчика
   
@@ -99,4 +104,5 @@ void loop() {
   mqttTick();     // проверяем входящие
   portal.tick();  // пинаем портал
   checkPortal();  // проверяем действия
+  raduga();
 }

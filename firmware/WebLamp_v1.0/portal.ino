@@ -10,6 +10,14 @@ bool checkPortal() {
       data.color = portal.getInt("col");
       sendPacket();
     }
+    if (portal.click("rad")) {
+      rad_on = portal.getInt("rad");
+      sendPacket();
+    }
+    if (portal.click("speed")) {
+      delayr = portal.getInt("speed");
+      sendPacket();
+    }
     if (portal.click()) memory.update();
   }
 
@@ -21,6 +29,8 @@ bool checkPortal() {
     if (portal.update("br")) portal.answer(data.bright);
     if (portal.update("sw")) portal.answer(data.power);
     if (portal.update("col")) portal.answer(data.color);
+    if (portal.update("rad")) portal.answer(rad_on);
+    if (portal.update("speed")) portal.answer(delayr);
   }
 
   // формы
