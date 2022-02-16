@@ -4,7 +4,8 @@ void build() {
 
   add.THEME(GP_DARK);
   add.AJAX_UPDATE("ledL,ledR,ledP,sw,br,col", 2000);
-
+  
+  
   add.LABEL("STATUS");
   add.BLOCK_BEGIN();
   add.LABEL("Local:");
@@ -23,9 +24,8 @@ void build() {
   add.BREAK();
   add.SLIDER("br", "Bright:", data.bright, 0, 255);
   add.SLIDER("col", "Color:", data.color, 0, 255);
-  add.LABEL("Raduga:");
-  add.SWITCH("rad", rad_on);
-  add.SLIDER("rad", "Pulse:", rad_on, 0, 2);
+  add.SLIDER("rad", "Mode:", rad_on, 0, 2);
+  add.LABEL("0 - Static color, 1 - Rainbow, 2 - Pulse color");
   add.SLIDER("speed", "Speed:", delayr, 1, 255);
   add.LABEL("Minimum - fast, Maximum - slow.");
   add.BLOCK_END();

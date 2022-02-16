@@ -8,16 +8,21 @@ void buttonTick() {
       sendPacket();
       memory.update();
       break;
-    case 2:   // подмигнуть
-      winkFlag = 1;
-      sendPacket();
-      break;
-    case 3:
+    case 2:
      rad_on=2;
      sendPacket();
       memory.update();
       break;
-    break;
+    case 3:   // подмигнуть
+      winkFlag = 1;
+      sendPacket();
+      FastLED.setBrightness(data.bright);
+      FastLED.show();
+      delay(200);
+      FastLED.setBrightness(data.bright-50);
+      FastLED.show();
+      delay(200);
+      break;
     case 4:
     data.power = !data.power;
       sendPacket();

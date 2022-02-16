@@ -9,9 +9,9 @@
 */
 
 #define LED_PIN D6   // пин ленты
-#define BTN_PIN D7  // пин кнопки
+#define BTN_PIN D8  // пин кнопки
 #define PIR_PIN D5    // пин PIR (ИК датчика)
-#define LED_AMOUNT 16 // кол-вл светодиодов
+#define LED_AMOUNT 30 // кол-вл светодиодов
 #define BTN_LEVEL 1   // 1 - кнопка подключает VCC, 0 - подключает GND
 #define USE_PIR 0   // 1 - использовать PIR (ИК датчик) на этой лампе
 #define IGNORE_PIR 1  // 1 - игнорировать сигнал PIR (ИК датчика) с удалённой лампы
@@ -45,7 +45,6 @@
 #define EB_STEP 100   // период step шага кнопки
 #include <EncButton.h>
 #include "Timer.h"
-
 // ============= ДАННЫЕ =============
 #if 1
 #define DEBUG(x) Serial.print(x)
@@ -71,7 +70,6 @@ struct LampData {
 
 LampData data;
 EncButton<EB_TICK, BTN_PIN> btn;
-CRGB leds[LED_AMOUNT];
 WiFiClient espClient;
 PubSubClient mqtt(espClient);
 GyverPortal portal;
@@ -80,6 +78,12 @@ bool pirFlag = 0;
 bool winkFlag = 0;
 bool startFlag = 0;
 const uint8_t hLen = strlen(MQTT_HEADER);
+int delayr=43;
+static int8_t dir = 10;
+int del=0;
+int rad_on;
+byte counter;
+CRGB leds[LED_AMOUNT];
 
 Timer onlineTmr(18000, false);  // 18 секунд таймаут онлайна
 Timer pirTmr(60000, false);     // 1 минута таймаут пира
@@ -87,16 +91,9 @@ Timer hbTmr(8000);              // 8 секунд период отправки 
 
 void setup() {
   startup();      // запускаем всё
-  FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, LED_AMOUNT);
 }
-byte counter;
-int rad_on=0;
-int delayr=63;
-static int8_t dir = 10;
-int del=0;
 void loop() {
   if (USE_PIR && digitalRead(PIR_PIN)) pirFlag = 1;  // опрос ИК датчика
-  
   heartbeat();    // отправляем пакет что мы онлайн
   memory.tick();  // проверяем обновление настроек
   animation();    // эффект ленты
